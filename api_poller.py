@@ -40,6 +40,8 @@ def transform_activities_heart_datapoint(datapoints):
                         'value': zone.get(one_val, 0.0)
                     })
         logger.debug('Returning activities_heart datapoints: %s', ret_dps)
+    if d_t is None:
+        return None
     if 'activities-heart-intraday' in datapoints:
         if 'dataset' in datapoints['activities-heart-intraday']:
             for one_d in datapoints['activities-heart-intraday']['dataset']:
@@ -586,6 +588,8 @@ def run_api_poller():
                             converted_dps.append(create_api_datapoint_meas_series(
                                 meas, series, one_d.get('value'), one_d.get('dateTime')))
                             date = one_d.get('dateTime')
+                        if date is None:
+                            continue
                         if '{}-{}-intraday'.format(meas, series) in datapoints:
                             if 'dataset' in datapoints['{}-{}-intraday'.format(meas, series)]:
                                 for one_d in datapoints['{}-{}-intraday'.format(meas, series)]['dataset']:
