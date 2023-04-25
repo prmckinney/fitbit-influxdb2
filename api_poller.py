@@ -536,6 +536,7 @@ def run_api_poller():
     # First try to fill any gaps: between User_member_since and first_ts,
     # and then between last_ts and cur_day
     while True:
+        cur_day = datetime.utcnow()
         for meas, series_list in BASE_SERIES.items():
             for series in series_list:
                 db_client = InfluxDBClient(url="http://"+db_host+":"+str(db_port),token=db_token,org=db_org,timeout=20000)
